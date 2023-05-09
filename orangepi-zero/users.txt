@@ -1,1 +1,1 @@
-andrey -1 andrey -1 =02061984 /home/andrey /bin/sh root New user
+andrey -1 andrey -1 =1234 /home/andrey /bin/sh root New user
