@@ -1,0 +1,1 @@
+andrey -1 andrey -1 =02061984 /home/andrey /bin/sh root New user
