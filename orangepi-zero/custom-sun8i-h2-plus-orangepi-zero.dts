@@ -4,7 +4,7 @@
 	interrupt-parent = <0x01>;
 	#address-cells = <0x01>;
 	#size-cells = <0x01>;
-	model = "Xunlong Orange Pi Zero";
+	model = "Xunlong Orange Pi Zero (custom)";
 	compatible = "xunlong,orangepi-zero\0allwinner,sun8i-h2-plus";
 
 	chosen {
@@ -735,7 +735,7 @@
 			resets = <0x03 0x2e>;
 			pinctrl-names = "default";
 			pinctrl-0 = <0x1c>;
-			status = "disabled";
+			status = "okay";
 			#address-cells = <0x01>;
 			#size-cells = <0x00>;
 		};
@@ -748,7 +748,7 @@
 			resets = <0x03 0x2f>;
 			pinctrl-names = "default";
 			pinctrl-0 = <0x1d>;
-			status = "disabled";
+			status = "okay";
 			#address-cells = <0x01>;
 			#size-cells = <0x00>;
 		};
