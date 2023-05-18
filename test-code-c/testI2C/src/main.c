@@ -45,11 +45,11 @@ int main()
 
     for(int i = 0; i < 100; i++){
         memset(&data_buffer, '\0', sizeof(data_buffer));
-        write(i2c_fd, data_buffer, 1);
+        write(i2c_fd, data_buffer, 1);	//Specify the first (0x00) adress for reading
         int read_bytes = read(i2c_fd, &data_buffer, 6); //Read 6 bytes: yy-mm-dd hh:mm:ss
 
-        printf("Time from rtc board: %X:%X:%X %X/%X/20%02X\n", data_buffer[2], data_buffer[1], data_buffer[0],
-                                                data_buffer[3], data_buffer[4], data_buffer[5]);
+        printf("Time from rtc board: %02X:%02X:%02X %02X/%02X/20%02X\n", data_buffer[2], data_buffer[1], data_buffer[0],
+                                                			 data_buffer[3], data_buffer[4], data_buffer[5]);
         sleep(1);
     }
 
