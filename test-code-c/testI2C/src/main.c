@@ -21,7 +21,7 @@ int main()
 {
     printf("+----------------------------------------+\n");
     printf("|  Test Embedded Linux I2C               |\n");
-    printf("|   - Read time from RTC DS2331          |\n");
+    printf("|   - Read time from RTC DS2331 (I2C0)   |\n");
     printf("+----------------------------------------+\n");
 
     //Open device
