@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include <unistd.h>     // For sleep()
+#include <unistd.h>
 #include <termios.h>    // Contains POSIX terminal control definitions
-#include <errno.h>      // Error integer and strerror() function
+#include <errno.h>
 #include "gpiod.h"
 
 char *used_chipname = "/dev/gpiochip0";     //default device address
@@ -26,16 +26,21 @@ int main(int argc, char *argv[])
                 break;
             default:
                 printf("Usage:\n "
-                       "1: no parameters, will be used default /dev/gpiochip0 device address and default gpio line 10 (PA10)\n"
+                       "1: no arguments, will be used default '/dev/gpiochip0' device address and default gpio line 10 (PA10)\n"
                        "2: 'programm_name -d /dev/gpiochipN -l L', where N - gpio chip number, L - gpio line number\n"
-                       "3: selected only -d option with argument\n"
-                       "4: selected only -l option with argument\n");
+                       "3: specified only -d option with argument\n"
+                       "4: specified only -l option with argument\n");
                 break;
         }
     }
 
+    //TODO: Add checking of input parameters, device contains correct path and name, gpio line is a number
+    //TODO: Add Cntl+C signal hanler 
+
+
     printf("+---------------------------------+\n");
     printf("| Test Embedded Linux GPIO (LEDs) |\n");
+    printf("|   - output mode                 |\n");
     printf("+---------------------------------+\n");
 
     chip = gpiod_chip_open(used_chipname);
@@ -45,7 +50,7 @@ int main(int argc, char *argv[])
     }
     printf("%s Opened Successfully\n", used_chipname);
 
-    line = gpiod_chip_get_line(chip, gpio_num);   //GPIO10(PA18)
+    line = gpiod_chip_get_line(chip, gpio_num);
     if (!line) {
         printf("Getting line error: [%i] %s\n", errno, strerror(errno));
         gpiod_chip_close(chip);
