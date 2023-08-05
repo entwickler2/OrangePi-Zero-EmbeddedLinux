@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
     }
 
     //TODO: Add checking of input parameters, device contains correct path and name, gpio line is a number
-    //TODO: Add Cntl+C signal hanler 
 
 
     printf("+---------------------------------+\n");
