@@ -4,6 +4,7 @@
 #include <termios.h>    // Contains POSIX terminal control definitions
 #include <errno.h>
 #include "gpiod.h"
+#include <signal.h>
 
 char *used_chipname = "/dev/gpiochip0";     //default device address
 unsigned int gpio_num = 10;                 //default gpio line
@@ -11,8 +12,15 @@ struct gpiod_chip *chip;
 struct gpiod_line *line;
 extern int errno;
 
+static volatile int keepRunning = 1;
+void intHandler(int) {
+    keepRunning = 0;
+}
+
 int main(int argc, char *argv[])
 {
+    signal(SIGINT, intHandler);
+
     int opt;
     while ((opt = getopt(argc, argv, "d:l:")) != EOF){
         switch(opt){
@@ -66,7 +74,7 @@ int main(int argc, char *argv[])
 
     printf("GPIO%d Configured to ouptut\n", gpio_num);
 
-    for(;;)
+    while(keepRunning)
     {
         gpiod_line_set_value(line, 1);
         printf("GPIO%d On\n", gpio_num);
