@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include <string.h>
-
 #include <fcntl.h>  // Contains file controls for open()
 #include <unistd.h> // For close()
 #include <termios.h> // Contains POSIX terminal control definitions
 #include <errno.h>  // Error integer and strerror() function
+#include <signal.h>
+
+static volatile int keepRunning = 1;
+void intHandler(int) {
+    keepRunning = 0;
+}
 
 int main()
 {
@@ -12,6 +17,8 @@ int main()
     printf("|    Test Embedded Linux USART   |\n");
     printf("|     - UART1 send/receive       |\n");
     printf("+--------------------------------+\n");
+
+   signal(SIGINT, intHandler);
 
     struct termios ttySettings; // Create new termios struct to get/set device settings
     char read_buf [256];    // Memory for read buffer, set size according to your needs
@@ -74,7 +81,9 @@ int main()
     // Set read buffer to 0 to allow calling printf() without issues.
     memset(&read_buf, '\0', sizeof(read_buf));
 
-    for(int i = 0; i < 100; i++){
+    int i = 0;
+    while(keepRunning){
+	i++;
         // Write data to serial port
         char msg[20] = { '\0' };
         sprintf(msg, "Test message: %d\n\r", i);

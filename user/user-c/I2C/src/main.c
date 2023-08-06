@@ -10,6 +10,7 @@
 #include <sys/ioctl.h>
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
+#include <signal.h>
 
 int i2c_fd;
 // The I2C device.
@@ -23,6 +24,11 @@ char time_buffer[8];
 bool set_time_selected = false;
 
 extern int errno;
+
+static volatile int keepRunning = 1;
+void intHandler(int) {
+    keepRunning = 0;
+}
 
 int main(int argc, char *argv[])
 {
@@ -68,7 +74,7 @@ int main(int argc, char *argv[])
     printf("|   - Read time from RTC DS2331          |\n");
     printf("+----------------------------------------+\n");
 
-
+    signal(SIGINT, intHandler);
 
     //Open device
     int i2c_fd = open(device, O_RDWR | O_NONBLOCK);
@@ -103,7 +109,7 @@ int main(int argc, char *argv[])
         write(i2c_fd, time_buffer, 8); //Set time 
     }
 
-    for(int i = 0; i < 100; i++){
+    while(keepRunning){
         memset(&data_buffer, '\0', sizeof(data_buffer));
         write(i2c_fd, data_buffer, 1);
         int read_bytes = read(i2c_fd, &data_buffer, 7); //Read time: yy-mm-dd hh:mm:ss
