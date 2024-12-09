@@ -1,7 +1,7 @@
 CC = $(CROSS_COMPILE)gcc
 KDIR := ~/Documents/Projects/embeddedLinux/buildroot/output/build/linux-6.1.14
 
-obj-m+=test-module-1.o
+obj-m+=module-1.o
 
 all:
 	make -C ${KDIR} M=$(PWD) modules
