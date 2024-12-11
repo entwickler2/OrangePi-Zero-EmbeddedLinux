@@ -1,6 +1,8 @@
 - Check that code conforms to Linux Kernel Coding Style Rules:
 	Run command:
 		<path to kernel source directory>/scripts/checkpatch.pl -f --no-tree <momdule-file-name.c>
+		f.e. ~/Documents/Projects/embeddedLinux/buildroot/output/build/linux-6.1.14/scripts/checkpatch.pl -f --no-tree module-1.c
+
 
 - Compile kernel module:
   1.	Make sure that KDIR variable in the MakeFile points to correct kernel source directory
